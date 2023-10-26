@@ -81,7 +81,7 @@ function createFiles() {
         } else {
             myEmitter.emit('log', 'init.createFiles()', 'INFO', 'config.json already exists.'); 
         }
-       
+
         if(!fs.existsSync(path.join(__dirname, './views/usage.txt'))) {
             fs.writeFile('./views/usage.txt', usagetxt, (err) => {
                 if(DEBUG) console.log('Data written to usage.txt file');
@@ -130,4 +130,4 @@ function initializeApp() {
 
 module.exports = {
     initializeApp,
-  }
+}
