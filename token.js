@@ -111,6 +111,47 @@ function updateToken(argv) {
     });
 }
 
+function searchToken(argv) {
+    if (DEBUG) console.log('token.searchToken()');
+    if (DEBUG) console.log(argv);
+    if (DEBUG) console.log(argv[2]);
+    if (DEBUG) console.log(argv[3]);
+
+    try {
+        const tokensData = JSON.parse(fs.readFileSync(__dirname + '/json/tokens.json', 'utf8'));
+
+        const filteredTokens = tokensData.filter((token) => {
+            switch (argv[2]) {
+                // Searches for username/phone/email
+                case 'u':
+                    if (token.username === argv[3]) {
+                        return token;
+                    } else {
+                        return "No such token found.";
+                    }
+                case 'p':
+                    if (token.phone === argv[3]) {
+                        return token;
+                    } else {
+                        return "No such token found.";
+                    }
+                case 'e':
+                    if (token.email === argv[3]) {
+                        return token;
+                    } else {
+                        return "No such token found.";
+                    }
+                default:
+                    return "Invalid query.";
+            }
+        });
+    } catch (err) {
+        console.error("Error searching for tokens: ", err);
+        return;
+    }
+
+}
+
 function tokenApp() {
     if(DEBUG) console.log('tokenApp()');
 
@@ -148,8 +189,10 @@ function tokenApp() {
             }
             break;
         case '--search':
-            if(DEBUG) console.log('token.searchToken()');
-            // searchToken();
+            // log already displays in searchToken.
+            // if(DEBUG) console.log('token.searchToken()');
+            // Search token.
+            searchToken(myArgs);
             break;
         case '--help':
         case '--h':
