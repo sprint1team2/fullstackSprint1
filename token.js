@@ -1,3 +1,9 @@
+////////////////////
+// How should the listTokens/searchToken/fetchToken functions work?
+// Are the callbacks in the search and list functions necessary? Should all the functions have a callback?
+////////////////////
+//
+//
 // Add logging to the CLI project by using eventLogging
 // load the logEvents module
 const logEvents = require('./logEvents');
@@ -111,6 +117,49 @@ function updateToken(argv) {
     });
 }
 
+function searchToken(argv, callback) {
+    if (DEBUG) console.log('token.searchToken()');
+    if (DEBUG) console.log(argv);
+
+    fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        const tokens = JSON.parse(data);
+        const matchingTokens = tokens.filter(token => {
+            switch (argv[2]) {
+                case 'u':
+                case 'U':
+                    return token.username === argv[3];
+                case 'e':
+                case 'E':
+                    return token.email === argv[3];
+                case 'p':
+                case 'P':
+                    return token.phone === argv[3];
+                default:
+                    return false;
+            }
+        });
+
+        callback(null, matchingTokens);
+    });
+}
+
+function tokenList(callback) {
+    fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        const tokens = JSON.parse(data);
+        callback(null, tokens);
+    });
+}
+
 function tokenApp() {
     if(DEBUG) console.log('tokenApp()');
 
@@ -119,9 +168,22 @@ function tokenApp() {
             if(DEBUG) console.log('token.tokenCount() --count');
             tokenCount();
             break;
+        // Do we want to list the entire token record? Would be a lot to list. Ask about this later.
         case '--list':
             if(DEBUG) console.log('token.tokenList() --list');
-            // tokenList();
+            tokenList((error, tokens) => {
+                if (error) {
+                    console.error("Error listing tokens: ", error.message);
+                } else if (tokens.length > 0) {
+                    console.log('All tokens:'); 
+                    tokens.forEach(token => {
+                        console.log(token);
+                    });
+                    console.log(tokens.length + ' tokens listed.');
+                } else {
+                    console.log('No tokens found.');
+                }
+            });
             break; 
         case '--new':
             if (myArgs.length < 3) {
@@ -141,15 +203,31 @@ function tokenApp() {
             break;
         case '--fetch':
             if (myArgs.length < 3) {
-                console.log('invalid syntax. node myapp token --fetch [username]')
+                console.log('invalid syntax. node myapp token --fetch [username]');
                 myEmitter.emit('log', 'token.fetchRecord() --fetch', 'WARNING', 'invalid syntax, usage displayed');
             } else {
                 // fetchRecord(myArgs[2]);
             }
             break;
+        // Do we want to return the entire token record, or just the token itself? Is the fetch command for finding just the token? Ask about this later.
         case '--search':
-            if(DEBUG) console.log('token.searchToken()');
-            // searchToken();
+            if (myArgs.length < 4) {
+                console.log('invalid syntax. node myapp token --search [option] [value]');
+                myEmitter.emit('log', 'token.searchToken() --search', 'WARNING', 'invalid syntax, usage displayed');
+            } else {
+                searchToken(myArgs, (error, tokens) => {
+                    if (error) {
+                        console.error("Error searching for tokens: ", error.message);
+                    } else if (tokens.length > 0) {
+                        console.log('Matching tokens:');
+                        tokens.forEach(token => {
+                            console.log(token);
+                        });
+                    } else {
+                        console.log('No matching tokens found.');
+                    }
+                });
+            }
             break;
         case '--help':
         case '--h':
