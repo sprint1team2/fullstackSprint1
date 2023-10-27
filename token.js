@@ -114,8 +114,6 @@ function updateToken(argv) {
 function searchToken(argv) {
     if (DEBUG) console.log('token.searchToken()');
     if (DEBUG) console.log(argv);
-    if (DEBUG) console.log(argv[2]);
-    if (DEBUG) console.log(argv[3]);
 
     try {
         const tokensData = JSON.parse(fs.readFileSync(__dirname + '/json/tokens.json', 'utf8'));
@@ -124,30 +122,19 @@ function searchToken(argv) {
             switch (argv[2]) {
                 // Searches for username/phone/email
                 case 'u':
-                    if (token.username === argv[3]) {
-                        return token;
-                    } else {
-                        return "No such token found.";
-                    }
+                    return token.username === argv[3];
                 case 'p':
-                    if (token.phone === argv[3]) {
-                        return token;
-                    } else {
-                        return "No such token found.";
-                    }
+                    return token.phone === argv[3];
                 case 'e':
-                    if (token.email === argv[3]) {
-                        return token;
-                    } else {
-                        return "No such token found.";
-                    }
+                    return token.email === argv[3];
                 default:
-                    return "Invalid query.";
+                    return false;
             }
         });
+        return filteredTokens;
     } catch (err) {
         console.error("Error searching for tokens: ", err);
-        return;
+        return [];
     }
 
 }
@@ -182,17 +169,30 @@ function tokenApp() {
             break;
         case '--fetch':
             if (myArgs.length < 3) {
-                console.log('invalid syntax. node myapp token --fetch [username]')
+                console.log('invalid syntax. node myapp token --fetch [username]');
                 myEmitter.emit('log', 'token.fetchRecord() --fetch', 'WARNING', 'invalid syntax, usage displayed');
             } else {
                 // fetchRecord(myArgs[2]);
             }
             break;
         case '--search':
-            // log already displays in searchToken.
-            // if(DEBUG) console.log('token.searchToken()');
-            // Search token.
-            searchToken(myArgs);
+            if (myArgs.length < 4) {
+                console.log('invalid syntax. node myapp token --search [option] [value]');
+                myEmitter.emit('log', 'token.searchToken() --search', 'WARNING', 'invalid syntax, usage displayed');
+            } else {
+                searchToken(myArgs, (error, tokens) => {
+                    if (error) {
+                        console.error("Error searching for tokens: ", error);
+                    } else if (tokens.length > 0) {
+                        console.log('Matching tokens:');
+                        tokens.forEach(token => {
+                            console.log(token);
+                        });
+                    } else {
+                        console.log('No matching tokens found.');
+                    }
+                });
+            }
             break;
         case '--help':
         case '--h':
