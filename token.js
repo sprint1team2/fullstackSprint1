@@ -1,3 +1,9 @@
+////////////////////
+// How should the listTokens/searchToken/fetchToken functions work?
+// Are the callbacks in the search and list functions necessary? Should all the functions have a callback?
+////////////////////
+//
+//
 // Add logging to the CLI project by using eventLogging
 // load the logEvents module
 const logEvents = require('./logEvents');
@@ -142,6 +148,18 @@ function searchToken(argv, callback) {
     });
 }
 
+function tokenList(callback) {
+    fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
+        if (error) {
+            callback(error, null);
+            return;
+        }
+
+        const tokens = JSON.parse(data);
+        callback(null, tokens);
+    });
+}
+
 function tokenApp() {
     if(DEBUG) console.log('tokenApp()');
 
@@ -153,7 +171,19 @@ function tokenApp() {
         // Do we want to list the entire token record? Would be a lot to list. Ask about this later.
         case '--list':
             if(DEBUG) console.log('token.tokenList() --list');
-            // tokenList();
+            tokenList((error, tokens) => {
+                if (error) {
+                    console.error("Error listing tokens: ", error.message);
+                } else if (tokens.length > 0) {
+                    console.log('All tokens:'); 
+                    tokens.forEach(token => {
+                        console.log(token);
+                    });
+                    console.log(tokens.length + ' tokens listed.');
+                } else {
+                    console.log('No tokens found.');
+                }
+            });
             break; 
         case '--new':
             if (myArgs.length < 3) {
@@ -187,7 +217,7 @@ function tokenApp() {
             } else {
                 searchToken(myArgs, (error, tokens) => {
                     if (error) {
-                        console.error("Error searching for tokens: ", error);
+                        console.error("Error searching for tokens: ", error.message);
                     } else if (tokens.length > 0) {
                         console.log('Matching tokens:');
                         tokens.forEach(token => {
