@@ -111,32 +111,35 @@ function updateToken(argv) {
     });
 }
 
-function searchToken(argv) {
+function searchToken(argv, callback) {
     if (DEBUG) console.log('token.searchToken()');
     if (DEBUG) console.log(argv);
 
-    try {
-        const tokensData = JSON.parse(fs.readFileSync(__dirname + '/json/tokens.json', 'utf8'));
+    fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
+        if (error) {
+            callback(error, null);
+            return;
+        }
 
-        const filteredTokens = tokensData.filter((token) => {
+        const tokens = JSON.parse(data);
+        const matchingTokens = tokens.filter(token => {
             switch (argv[2]) {
-                // Searches for username/phone/email
                 case 'u':
+                case 'U':
                     return token.username === argv[3];
-                case 'p':
-                    return token.phone === argv[3];
                 case 'e':
+                case 'E':
                     return token.email === argv[3];
+                case 'p':
+                case 'P':
+                    return token.phone === argv[3];
                 default:
                     return false;
             }
         });
-        return filteredTokens;
-    } catch (err) {
-        console.error("Error searching for tokens: ", err);
-        return [];
-    }
 
+        callback(null, matchingTokens);
+    });
 }
 
 function tokenApp() {
@@ -147,6 +150,7 @@ function tokenApp() {
             if(DEBUG) console.log('token.tokenCount() --count');
             tokenCount();
             break;
+        // Do we want to list the entire token record? Would be a lot to list. Ask about this later.
         case '--list':
             if(DEBUG) console.log('token.tokenList() --list');
             // tokenList();
@@ -175,6 +179,7 @@ function tokenApp() {
                 // fetchRecord(myArgs[2]);
             }
             break;
+        // Do we want to return the entire token record, or just the token itself? Is the fetch command for finding just the token? Ask about this later.
         case '--search':
             if (myArgs.length < 4) {
                 console.log('invalid syntax. node myapp token --search [option] [value]');
