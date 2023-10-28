@@ -15,21 +15,27 @@ myEmitter.on('log', (event, level, msg) => logEvents(event, level, msg));
 const { configjson } = require('./templates')
 
 function displayConfig() {
-    if(DEBUG) console.log('conigf.displayConfig()');
+    if (DEBUG) console.log('config.displayConfig');
     fs.readFile(__dirname + "/json/config.json", (error, data) => {
-        if(error) throw error; // should write a log event for the error, github issue #12     
+        if (error) {
+            logEvents('config.displayConfig', 'ERROR', 'Error reading config.json: ' + error.message);
+            throw error;
+        }
         console.log(JSON.parse(data));
+        myEmitter.emit('log', 'config.displayConfig', 'INFO', 'Display config.json displayed');
     });
-    myEmitter.emit('log', 'config.displayConfig()', 'INFO', 'display config.json displayed');
 }
 
 function resetConfig() {
-    if(DEBUG) console.log('config.resetConfig()');
+    if (DEBUG) console.log('config.resetConfig');
     let configdata = JSON.stringify(configjson, null, 2);
     fs.writeFile(__dirname + '/json/config.json', configdata, (error) => {
-        if(error) throw error;   // issue #12 also applies here
-        if(DEBUG) console.log('Config file reset to original state');
-        myEmitter.emit('log', 'config.resetConfig()', 'INFO', 'config.json reset to original state.');
+        if (error) {
+            logEvents('config.resetConfig', 'ERROR', 'Error writing config.json: ' + error.message);
+            throw error;
+        }
+        if (DEBUG) console.log('Config file reset to the original state');
+        myEmitter.emit('log', 'config.resetConfig', 'INFO', 'config.json reset to the original state');
     });
 }
 
