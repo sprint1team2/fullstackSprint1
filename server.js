@@ -1,3 +1,9 @@
+/////////////////////////////
+// Don't use this server,  //
+// Use express.js instead! //
+/////////////////////////////
+
+
 global.DEBUG = false;
 const http = require('http');
 const fs = require('fs');
@@ -47,6 +53,7 @@ const server = http.createServer(async (req, res) => {
             `);
         default:
             break;
+        
     };
 
     function fetchFile(path) {

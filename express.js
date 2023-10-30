@@ -29,12 +29,26 @@ app.get('/new', (req, res) => {
   res.sendFile(__dirname + '/public/newtoken.html');
 });
 
+
+// Not working as expected. Needs to be fixed!
 app.post('/new', (req, res) => {
     var theToken = newToken(req.body.username);
     res.setHeader('Content-type', 'text/html');
-    res.write(`${req.body.username} token is ${theToken}</br>`);
-    res.write(`<a href="http://localhost:3000">[home]</a>`);
-    res.end();
+    // res.write(`${req.body.username} token is ${theToken}</br>`);
+    // res.write(`<a href="http://localhost:3000" class="homebutton">[home]</a>`);
+    const htmlContent = `
+    <!doctype html>
+    <html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./public/style.css">
+    </head>
+    <body>
+        ${req.body.username} token is ${theToken} <br />
+        <a href="http://localhost:3000">[home]</a>
+    </body>
+    </html>
+    `
+    res.send(htmlContent);
 });
 
 // Start the server

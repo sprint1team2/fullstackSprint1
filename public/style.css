@@ -1,0 +1,89 @@
+/* Reset default margin and padding */
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+  /* Set a background color for the entire page */
+body {
+    background-color: #fff5d2;
+    font-family: Arial, sans-serif;
+}
+
+.tokentainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+  /* Style the form container */
+.form-container {
+    max-width: 50vw;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+  /* Style the heading */
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h4 {
+    font-size: 32px;
+    color: #333;
+    /* margin: 20px; */
+    text-align: center;
+    margin-bottom: 15vh;
+}
+
+  /* Style links */
+.homebutton {
+    color: #007acc;
+    text-decoration: none;
+    border: black solid 1px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: white;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.homebutton:hover {
+    background-color: #cccccc;
+    color: #016eb7;
+}
+
+  /* Style input fields */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+  /* Style the button */
+button {
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0055a5;
+}

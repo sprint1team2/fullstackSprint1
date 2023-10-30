@@ -88,31 +88,42 @@ function updateToken(argv) {
     fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
         if (error) throw error;
         let tokens = JSON.parse(data);
+        let objFound = false;
+        let success = false;
         tokens.forEach(obj => {
             if (obj.username === argv[3]) {
                 if (DEBUG) console.log(obj);
+                objFound = true;
                 switch (argv[2].toLowerCase()) { 
                     case 'p':
                         obj.phone = argv[4];
+                        success = true;
                         break;
                     case 'e':
                         obj.email = argv[4];
+                        success = true;
                         break;
                     default:
                         console.log(`Invalid option: ${argv[2]}. Please use 'p' for phone or 'e' for email.`);
                         return; 
                 }
-                if (DEBUG) console.log(obj);
+                // if (DEBUG) console.log(obj);
             }
         });
-        userTokens = JSON.stringify(tokens);
-        fs.writeFile(__dirname + '/json/tokens.json', userTokens, (err) => {
-            if (err) console.log(err);
-            else {
-                console.log(`Token record for ${argv[3]} was updated with ${argv[4]}.`);
-                myEmitter.emit('log', 'token.updateToken()', 'INFO', `Token record for ${argv[3]} was updated with ${argv[4]}.`);
-            }
-        });
+        if (!objFound) {
+            console.log(`User ${argv[3]} not found.`);
+            myEmitter.emit('log', 'token.updateToken()', 'WARNING', `User ${argv[3]} not found.`);
+            return;
+        } else if (success) {
+            userTokens = JSON.stringify(tokens);
+            fs.writeFile(__dirname + '/json/tokens.json', userTokens, (err) => {
+                if (err) console.log(err);
+                else {
+                    console.log(`Token record for ${argv[3]} was updated with ${argv[4]}.`);
+                    myEmitter.emit('log', 'token.updateToken()', 'INFO', `Token record for ${argv[3]} was updated with ${argv[4]}.`);
+                }
+            });
+        }
     });
 }
 
