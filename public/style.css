@@ -9,9 +9,19 @@ html {
 body {
     background-color: #fff5d2;
     font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
 }
 
 .tokentainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.homecontainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,8 +34,8 @@ body {
     max-width: 50vw;
     margin: 0 auto;
     padding: 20px;
-    margin-top: 15vh;
-    margin-bottom: 15vh;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -33,18 +43,46 @@ body {
 }
 
   /* Style the heading */
-h2 {
+/* h2 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
-}
+} */
 
 h4 {
     font-size: 32px;
     color: #333;
-    /* margin: 20px; */
-    text-align: center;
-    margin-bottom: 15vh;
+    transition: transform 0.3s ease, scale 0.3s ease;
+}
+
+h4:hover {
+    transform: scale(0.95);
+    cursor: help;
+}
+
+/* h4:active {
+    animation: spin 1s ease-in-out, changeBGColor 1s ease;
+} */
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); 
+        scale: 0.95;
+    }
+    100% { transform: rotate(360deg); 
+        scale: 0.95;}
+}
+
+@keyframes changeBGColor {
+    0% {
+        background-color: #fff5d2;
+    }
+    50% {
+        background-color: #d7d2ff;
+    }
+    100% {
+        background-color: #fff5d2;
+    }
 }
 
   /* Style links */
@@ -58,12 +96,19 @@ h4 {
     font-weight: bold;
     text-align: center;
     transition: background-color 0.3s ease;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
 }
 
 .homebutton:hover {
     background-color: #cccccc;
     color: #016eb7;
 }
+
+.homebutton:active {
+    scale: 0.95;
+}
+
 
   /* Style input fields */
 input[type="text"], input[type="password"] {
@@ -86,4 +131,13 @@ button {
 
 button:hover {
     background-color: #0055a5;
+}
+
+.cool {
+    color: #fff5d2;
+    rotate: 5deg;
+    cursor: default;
+    margin-left: 65vw;
+    margin-top: 40vh;
+    position: absolute;
 }

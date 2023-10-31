@@ -3,18 +3,36 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+    <h2 class="cool">wow what a cool animation</h2>
     <div class="tokentainer"> <!-- Get it? -->
-        <h4>Add a New User:</h4><br />
+        <h4 id="myHeading">Add a New User:</h4><br />
         <form action="/new" method="post" class="form-container">
-            <input type="text" name="username" /><br />
+            <input type="text" name="username" placeholder="Enter username"/><br />
             <button>Save</button>
         </form>
         <a href="http://localhost:3000" class="homebutton">[home]</a>
     </div>
-    <!-- <div id="responseContainer">
+    <script>
+        const heading = document.getElementById("myHeading");
+        const body = document.body;
 
-    </div>
-    <script src="script.js"></script> -->
+        let animationPlaying = false;
+
+        heading.addEventListener("click", () => {
+            if (!animationPlaying) {
+                animationPlaying = true;
+                heading.style.animation = "spin 1s ease-in-out forwards";
+                body.style.animation = "changeBGColor 1s ease-in-out forwards";
+
+                // Reset animationPlaying after the animation duration (500ms in this example)
+                setTimeout(() => {
+                    animationPlaying = false;
+                    heading.style.animation = "";
+                    body.style.animation = "";
+                }, 1000);
+            }
+        });
+    </script>
 </body>
 </html>
                 
