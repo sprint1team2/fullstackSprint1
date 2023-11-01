@@ -10,6 +10,14 @@ app.use(express.static('public'));
 // Harvest fields from a form
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/public', express.static('public', {
+  setHeaders: (res, path, stat) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-type', 'text/css');
+    }
+  },
+}));
+
 global.DEBUG = true;
 
 // Serve the index.html file when the root URL is requested
@@ -22,10 +30,13 @@ app.get('/', (req, res) => {
 app.get('/count', async (req, res) => {
   var theCount = await tokenCount();
   res.setHeader('Content-type', 'text/html');
-  res.write(`<!doctype html><html><body>`);
-  res.write(`Token count is ${theCount}</br>`);
-  res.write(`<a href="http://localhost:3000">[home]</a>`);
-  res.write(`</body></html>`);
+  res.write(`<!doctype html><html><head>`);
+  res.write(`<link rel="stylesheet" type="text/css" href="/style.css">`);
+  res.write(`</head><body>`);
+  res.write(`<div class="countcontainer">`);
+  res.write(`<h3>Token count is <span class="tokencount">${theCount}</span></h3>`);
+  res.write(`<a href="http://localhost:3000" class="homebutton" class="lessmargin">[home]</a>`);
+  res.write(`</div></body></html>`);
   res.end();
 });
 
@@ -41,8 +52,13 @@ app.get('/new', (req, res) => {
 app.post('/new', (req, res) => {
     var theToken = newToken(req.body.username);
     res.setHeader('Content-type', 'text/html');
-    res.write(`${req.body.username} token is ${theToken}</br>`);
+    res.write("<!doctype html><html><head>");
+    res.write(`<link rel="stylesheet" type="text/css" href="/style.css">`);
+    res.write(`</head><body>`);
+    res.write(`<div class='countcontainer'>`);
+    res.write(`<h3>${req.body.username}'s token is <span class="tokencount">${theToken}</span></h3>`);
     res.write(`<a href="http://localhost:3000" class="homebutton">[home]</a>`);
+    res.write(`</div></body></html>`);
     res.end();
 });
 
