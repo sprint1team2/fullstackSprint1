@@ -1,21 +1,5 @@
-/*************************
- * File Name: logEvents.js
- * Purpose: To provide a logging feature
- * 
- * Created Date: 22 Jan 2022
- * Authors:
- * PJR - Peter Rawsthorne
- * Revisions:
- * Date, Author, Description
- * 22 Jan 2022, PJR, File created
- * 25 Jan 2022, PJR, add date to log file name
- *      implement DEBUG global
- * 14 Oct 2022, PJR, moved into github project qap-two
- *      enhanced with additional folder creation for yyyy
- * 06 Feb 2023, PJR, fixed the logs/yyyy folder creation bug
- * 05 Oct 2023, PJR, altered log file name
- *
- *************************/
+// Used by nearly every other file to log events to a daily log file
+
 // NPM installed Modules
 const { format, getYear } = require('date-fns');
 const { v4: uuid } = require('uuid');
@@ -25,7 +9,10 @@ const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
 
+// Logs events to a daily log file
+// Takes in an event, an event level, and a message
 const logEvents = async (event, level, message) => {
+    // Creates a log item using all the passed in arguments and the current date and time
     const dateTime = `${format(new Date(), 'yyyyMMdd\tHH:mm:ss')}`;
     const logItem = `${dateTime}\t${level}\t${event}\t${message}\t${uuid()}`;
     try {
@@ -33,7 +20,6 @@ const logEvents = async (event, level, message) => {
         const currFolder = 'logs/' + getYear(new Date());
         if(!fs.existsSync(path.join(__dirname, 'logs/'))) {
             // if the parent directory logs/ doesn't exist, create it
-            // is there a bug here?
             await fsPromises.mkdir(path.join(__dirname, 'logs/'));
             if(!fs.existsSync(path.join(__dirname, currFolder))) {
                 // create the directory for the year ./logs/yyyy

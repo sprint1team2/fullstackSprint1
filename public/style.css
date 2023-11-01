@@ -1,17 +1,20 @@
-/* Reset default margin and padding */
+/* The CSS styles for the web server. */
+
+/* Resetting the margin and padding */
 html {
     margin: 0;
     padding: 0;
     height: 100%;
 }
 
-  /* Set a background color for the entire page */
+/* Setting the background color and font-family. Also setting a transition for later use */
 body {
     background-color: #fff5d2;
     font-family: Arial, sans-serif;
     transition: background-color 0.3s ease;
 }
 
+/* The container for the new token page. Aligns all items in a centered column */
 .tokentainer {
     display: flex;
     flex-direction: column;
@@ -21,6 +24,7 @@ body {
     position: relative;
 }
 
+/* The container for the home page. Aligns all items in a centered column */
 .homecontainer {
     display: flex;
     flex-direction: column;
@@ -29,7 +33,7 @@ body {
     height: 100%;
 }
 
-  /* Style the form container */
+  /* Styles for the form */
 .form-container {
     max-height: 15vh;
     height: 100%;
@@ -45,24 +49,20 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
-  /* Style the heading */
-/* h2 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-} */
-
+/* Styles for the heading */
 h4 {
     font-size: 32px;
     color: #333;
     transition: transform 0.3s ease, scale 0.3s ease, margin-left 0.3s ease;
 }
 
+/* Changes the cursor and shrinks slightly when hovering */
 h4:hover {
     transform: scale(0.95);
-    cursor: help;
+    cursor: help; /* "What's this?" */
 }
 
+/* Some animation keyframes */
 @keyframes spin {
     0% {
         transform: rotate(0deg); 
@@ -93,7 +93,7 @@ h4:hover {
     }
 }
 
-  /* Style links */
+/* Styles for the home button. Reused for the home page's buttons */
 .homebutton {
     color: #007acc;
     text-decoration: none;
@@ -117,9 +117,8 @@ h4:hover {
     scale: 0.95;
 }
 
-
-  /* Style input fields */
-input[type="text"], input[type="password"] {
+/* Styles for the form's input field */
+input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -127,7 +126,7 @@ input[type="text"], input[type="password"] {
     border-radius: 5px;
 }
 
-  /* Style the button */
+/* Styles for buttons, specifically the form's send button */
 button {
     background-color: #007acc;
     color: #fff;
@@ -135,12 +134,16 @@ button {
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1vh;
 }
 
 button:hover {
     background-color: #0055a5;
 }
 
+/* Don't worry about this, this totally doesn't do anything (wink) */
+/* (It really doesn't do much of anything) */
 .cool {
     color: #fff5d2;
     rotate: 5deg;
@@ -148,14 +151,4 @@ button:hover {
     margin-left: 65vw;
     margin-top: 40vh;
     position: absolute;
-}
-
-.savebtn {
-    transition: background-color 0.3s ease;
-    background-color: #0055a5;
-    margin-top: 1vh;
-}
-
-.savebtn:hover {
-    background-color: #004280;
 }
