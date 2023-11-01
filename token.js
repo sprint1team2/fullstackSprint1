@@ -42,54 +42,6 @@ var tokenCount = function() {
     });
 };
 
-// // Generates a new token based on the given username
-// function newToken(username) {
-//     if(DEBUG) console.log('token.newToken()');
-
-//     // A new token template
-//     let newToken = JSON.parse(`{
-//         "created": "1969-01-31 12:30:00",
-//         "username": "username",
-//         "email": "user@example.com",
-//         "phone": "5556597890",
-//         "token": "token",
-//         "expires": "1969-02-03 12:30:00",
-//         "confirmed": "tbd"
-//     }`);
-
-//     let now = new Date();
-//     let expires = addDays(now, 3);
-
-//     // Building the new token
-//     newToken.created = `${format(now, 'yyyy-MM-dd HH:mm:ss')}`;
-//     newToken.username = username;
-//     newToken.token = crc32(username).toString(16);
-//     newToken.expires = `${format(expires, 'yyyy-MM-dd HH:mm:ss')}`;
-
-//     fs.readFile(__dirname + '/json/tokens.json', 'utf-8', (error, data) => {
-//         if(error) {
-//             myEmitter.emit('log', 'token.newToken()', 'ERROR', 'token.json read error');
-//             throw error;
-//         }
-//         let tokens = JSON.parse(data);
-//         tokens.push(newToken);
-//         userTokens = JSON.stringify(tokens);
-        
-//         // Writing the new token to the tokens.json file
-//         fs.writeFile(__dirname + '/json/tokens.json', userTokens, (err) => {
-//             if (err) {
-//                 myEmitter.emit('log', 'token.newToken()', 'ERROR', 'token.json write error');
-//                 console.log(err);
-//             } else { 
-//                 console.log(`New token ${newToken.token} was created for ${username}.`);
-//                 myEmitter.emit('log', 'token.newToken()', 'INFO', `New token ${newToken.token} was created for ${username}.`);
-//             }
-//         })
-        
-//     });
-//     return newToken.token;
-// }
-
 // Generates a new token based on the given username
 function newToken(username) {
     if (DEBUG) console.log('token.newToken()');
