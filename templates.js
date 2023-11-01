@@ -28,14 +28,14 @@ myapp <command> <option>
 Usage:
 
 myapp --help                            displays help
-myapp init --all                        creates the folder structure and config file
+myapp init --all                        creates the folder structure and json/txt files
 myapp init --mk                         creates the folder structure
-myapp init --cat                        creates the config file with default settings
+myapp init --cat                        creates the json and txt files
 myapp config --show                     displays a list of the current config settings
 myapp config --reset                    resets the config file with default settings
 myapp config --set                      sets a specific config setting
 myapp token --count                     displays a count of the tokens created
-myapp token --list                      list all the usernames with tokens
+myapp token --list                      displays all tokens
 myapp token --new <username>            generates a token for a given username, saves tokens to the json file
 myapp token --upd p <username> <phone>  updates the json entry with phone number
 myapp token --upd e <username> <email>  updates the json entry with email
@@ -52,9 +52,9 @@ myapp init <command> <option>
 
 Usage:
 
-myapp init --all          creates the folder structure and config file
+myapp init --all          creates the folder structure and json/txt files
 myapp init --mk           creates the folder structure
-myapp init --cat          creates the config file with default settings
+myapp init --cat          creates the json and txt files
 
 `;
 
@@ -77,7 +77,7 @@ myapp <command> <option>
 Usage:
 
 myapp token --count                     displays a count of the tokens created
-myapp token --list                      list all the usernames with tokens
+myapp token --list                      displays all tokens
 myapp token --new <username>            generates a token for a given username, saves tokens to the json file
 myapp token --upd p <username> <phone>  updates the json entry with phone number
 myapp token --upd e <username> <email>  updates the json entry with email

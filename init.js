@@ -51,7 +51,7 @@ function createFolders() {
     }
 };
 
-// Creates the config.json and usage.txt files, based on the templates in templates.js
+// Creates the json and txt files
 function createFiles() {
     if(DEBUG) console.log('init.createFiles()');
     myEmitter.emit('log', 'init.createFiles()', 'INFO', 'Files should be created.');
