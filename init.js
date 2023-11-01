@@ -1,22 +1,5 @@
-/*************************
- * File Name: init.js
- * Purpose: The routines to initialize the app
- * 
- * Commands:
-myapp init --all      creates the folder structure and config file
-myapp init --mk       creates the folder structure
-myapp init --cat      creates the config file with default settings
- *
- * Created Date: 09 Jan 2022
- * Authors:
- * PJR - Peter Rawsthorne
- * Revisions:
- * Date, Author, Description
- * 09 Jan 2022, PJR, File created
- * 12 Feb 2022, PJR, added createFiles() for init, config, and token views
- * 13 Oct 2022, PJR, re-hydrated project from the spring
- * 05 Oct 2023, PJR, altered for lecture prep
- *************************/
+// Initializes the application
+
 // Node.js common core global modules
 const fs = require('fs');
 const fsPromises = require('fs').promises;
@@ -33,12 +16,14 @@ const myEmitter = new MyEmitter();
 // add the listener for the logEvent
 myEmitter.on('log', (event, level, msg) => logEvents(event, level, msg));
 
+// Getting some templates
 const { folders, configjson, usagetxt } = require('./templates');
 
+// Creates required folders, specified in templates.js
 function createFolders() {
     if(DEBUG) console.log('init.createFolders()');
     myEmitter.emit('log', 'init.createFolders()', 'INFO', 'All folders should be created.');
-    let mkcount = 0;
+    let mkcount = 0; // Keeps track of number of folders created
     folders.forEach(foldername => {
         if(DEBUG) console.log(foldername);
         try {
@@ -47,21 +32,26 @@ function createFolders() {
                 mkcount++;
             }
         } catch (err) {
+            myEmitter.emit('log', 'init.createFolders()', 'ERROR', 'Folder creation was unsuccessful.');
             console.log(err);
         }
     });
+    // If no folders were needed to be created...
     if(mkcount === 0) {
         if(DEBUG) console.log('All folders already exist.');
         myEmitter.emit('log', 'init.createFolders()', 'INFO', 'All folders already existed.');
+    // If only some folders were needed to be created...
     } else if (mkcount <= folders.length) {
         if(DEBUG) console.log(mkcount + ' of ' + folders.length + ' folders were created.');
         myEmitter.emit('log', 'init.createFolders()', 'INFO', mkcount + ' of ' + folders.length + ' folders needed to be created.');
+    // If all folders were needed to be created
     } else {
         if(DEBUG) console.log('All folders successfully created.');
         myEmitter.emit('log', 'init.createFolders()', 'INFO', 'All folders successfully created.');
     }
 };
 
+// Creates the config.json and usage.txt files, based on the templates in templates.js
 function createFiles() {
     if(DEBUG) console.log('init.createFiles()');
     myEmitter.emit('log', 'init.createFiles()', 'INFO', 'Files should be created.');
@@ -91,29 +81,35 @@ function createFiles() {
             myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/usage.txt already exists.'); 
         }
     } catch(err) {
+        myEmitter.emit('log', 'init.createFiles()', 'ERROR', 'File creation was unsuccessful.');
         console.log(err);
     }
 };
 
 const myArgs = process.argv.slice(2);
+
+// The main initialization function
 function initializeApp() {
     if(DEBUG) console.log('initializeApp()');
     myEmitter.emit('log', 'initializeApp()', 'INFO', 'init feature was called.');
     
+    // Switch based on passed arguments
     switch (myArgs[1]) {
     case '--all':
+        // Creates all folders and files
         if(DEBUG) console.log('--all createFolders() & createFiles()');
         createFolders();
         createFiles();
         myEmitter.emit('log', 'init --all', 'INFO', 'Create all folders and files.');
         break;
     case '--cat':
+        // Creates all files
         if(DEBUG) console.log('--cat createFiles()');
-        // TODO: Do all the folders exist? See issue #6 in github
         createFiles();
         myEmitter.emit('log', 'init --cat', 'INFO', 'Create all files.');
         break;
     case '--mk':
+        // Creates all folders
         if(DEBUG) console.log('--mk createFolders()');
         createFolders();
         myEmitter.emit('log', 'init --mk', 'INFO', 'Create all folders.');
@@ -121,6 +117,7 @@ function initializeApp() {
     case '--help':
     case '--h':
     default:
+        // By default, displays the init.txt file
         fs.readFile(__dirname + "/views/init.txt", (error, data) => {
             if(error) throw error;              
             console.log(data.toString());

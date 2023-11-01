@@ -1,3 +1,5 @@
+// All the templates used for creating files on initialization, and a list of folders to be created on initialization
+
 const folders = ['models', 'views', 'routes', 'logs', 'json'];
 
 const configjson = { 
