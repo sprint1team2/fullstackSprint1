@@ -1,0 +1,178 @@
+/* The CSS styles for the web server. */
+
+/* Resetting the margin and padding */
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Setting the background color and font-family. Also setting a transition for later use */
+body {
+    background-color: #fff5d2;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
+}
+
+/* The container for the new token page. Aligns all items in a centered column */
+.tokentainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+/* The container for the home page. Aligns all items in a centered column */
+.homecontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+  /* Styles for the form */
+.form-container {
+    max-height: 15vh;
+    height: 100%;
+    width: 100%;
+    max-width: 20vw;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the heading */
+h4 {
+    font-size: 32px;
+    color: #333;
+    transition: transform 0.3s ease, scale 0.3s ease, margin-left 0.3s ease;
+}
+
+/* Changes the cursor and shrinks slightly when hovering */
+h4:hover {
+    transform: scale(0.95);
+    cursor: help; /* "What's this?" */
+}
+
+/* Some animation keyframes */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg); 
+        scale: 0.95;
+    }
+    33% {
+        margin-left: 10vw;
+    }
+    66% {
+        margin-left: -10vw;
+    }
+    100% { 
+        transform: rotate(360deg); 
+        scale: 0.95;
+        margin-left: 0vw;
+    }
+}
+
+@keyframes changeBGColor {
+    0% {
+        background-color: #fff5d2;
+    }
+    50% {
+        background-color: #d7d2ff;
+    }
+    100% {
+        background-color: #fff5d2;
+    }
+}
+
+/* Styles for the home button. Reused for the home page's buttons */
+.homebutton {
+    color: #007acc;
+    text-decoration: none;
+    border: black solid 1px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: white;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+}
+
+.homebutton:hover {
+    background-color: #cccccc;
+    color: #016eb7;
+}
+
+.homebutton:active {
+    scale: 0.95;
+}
+
+/* Styles for the form's input field */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Styles for buttons, specifically the form's send button */
+button {
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1vh;
+}
+
+button:hover {
+    background-color: #0055a5;
+}
+
+/* Don't worry about this, this totally doesn't do anything (wink) */
+/* (It really doesn't do much of anything) */
+.cool {
+    color: #fff5d2;
+    rotate: 5deg;
+    cursor: default;
+    margin-left: 65vw;
+    margin-top: 40vh;
+    position: absolute;
+}
+
+.countcontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 30vh;
+}
+
+h3 {
+    font-size: 32px;
+}
+
+.tokencount {
+    font-size: 32px;
+    color: #5cc048;
+    text-decoration: underline;
+}
+
+.lessmargin {
+    margin: 0;
+    margin-top: -5vh;
+}

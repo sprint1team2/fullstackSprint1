@@ -1,0 +1,39 @@
+<!-- The new tokens page -->
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<!-- A heading, a form (to get a user's token) and a button (returns to the home page) -->
+<body>
+    <h2 class="cool">wow what a cool animation</h2>
+    <div class="tokentainer">
+        <h4 id="myHeading">Add a New User:</h4>
+        <form action="/new" method="post" class="form-container">
+            <input type="text" name="username" placeholder="Enter username"/><br />
+            <button>Save</button>
+        </form>
+        <a href="http://localhost:3000" class="homebutton">[home]</a>
+    </div>
+    <!-- Don't worry about this script, it's a seeeecret (you'll figure it out pretty easily) -->
+    <script>
+        const heading = document.getElementById("myHeading");
+        const body = document.body;
+
+        let animationPlaying = false;
+
+        heading.addEventListener("click", () => {
+            if (!animationPlaying) {
+                animationPlaying = true;
+                heading.style.animation = "spin 1s ease-in-out forwards";
+                body.style.animation = "changeBGColor 1s ease-in-out forwards";
+
+                setTimeout(() => {
+                    animationPlaying = false;
+                    heading.style.animation = "";
+                    body.style.animation = "";
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
