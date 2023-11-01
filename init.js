@@ -17,7 +17,7 @@ const myEmitter = new MyEmitter();
 myEmitter.on('log', (event, level, msg) => logEvents(event, level, msg));
 
 // Getting some templates
-const { folders, configjson, usagetxt } = require('./templates');
+const { folders, configjson, usagetxt, inittxt, configtxt, tokentxt } = require('./templates');
 
 // Creates required folders, specified in templates.js
 function createFolders() {
@@ -72,6 +72,20 @@ function createFiles() {
             myEmitter.emit('log', 'init.createFiles()', 'INFO', 'config.json already exists.'); 
         }
 
+        if(!fs.existsSync(path.join(__dirname, './json/tokens.json'))) {
+            fs.writeFile('./json/tokens.json', '[]', (err) => {
+                if(err) {
+                    console.log(err)
+                    myEmitter.emit('log', 'init.createFiles()', 'ERROR', './json/tokens.json creation was unsuccessful.');
+                } else {
+                    if(DEBUG) console.log('tokens.json file created');
+                    myEmitter.emit('log', 'init.createFiles()', 'INFO', './json/tokens.json successfully created.');
+                }
+            });
+        } else {
+            myEmitter.emit('log', 'init.createFiles()', 'INFO', './json/tokens.json already exists.');
+        }
+
         if(!fs.existsSync(path.join(__dirname, './views/usage.txt'))) {
             fs.writeFile('./views/usage.txt', usagetxt, (err) => {
                 if(DEBUG) console.log('Data written to usage.txt file');
@@ -79,6 +93,33 @@ function createFiles() {
             });
         } else {
             myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/usage.txt already exists.'); 
+        }
+
+        if(!fs.existsSync(path.join(__dirname, './views/token.txt'))) {
+            fs.writeFile('./views/token.txt', tokentxt, (err) => {
+                if(DEBUG) console.log('Data written to token.txt file');
+                myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/token.txt successfully created.');
+            });
+        } else {
+            myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/token.txt already exists.');
+        }
+
+        if(!fs.existsSync(path.join(__dirname, './views/config.txt'))) {
+            fs.writeFile('./views/config.txt', configtxt, (err) => {
+                if(DEBUG) console.log('Data written to config.txt file');
+                myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/config.txt successfully created.');
+            });
+        } else {
+            myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/config.txt already exists.');
+        }
+
+        if(!fs.existsSync(path.join(__dirname, './views/init.txt'))) {
+            fs.writeFile('./views/init.txt', inittxt, (err) => {
+                if(DEBUG) console.log('Data written to init.txt file');
+                myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/init.txt successfully created.');
+            });
+        } else {
+            myEmitter.emit('log', 'init.createFiles()', 'INFO', './views/init.txt already exists.');
         }
     } catch(err) {
         myEmitter.emit('log', 'init.createFiles()', 'ERROR', 'File creation was unsuccessful.');
