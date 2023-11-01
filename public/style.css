@@ -31,7 +31,10 @@ body {
 
   /* Style the form container */
 .form-container {
-    max-width: 50vw;
+    max-height: 15vh;
+    height: 100%;
+    width: 100%;
+    max-width: 20vw;
     margin: 0 auto;
     padding: 20px;
     margin-top: 10vh;
@@ -52,7 +55,7 @@ body {
 h4 {
     font-size: 32px;
     color: #333;
-    transition: transform 0.3s ease, scale 0.3s ease;
+    transition: transform 0.3s ease, scale 0.3s ease, margin-left 0.3s ease;
 }
 
 h4:hover {
@@ -60,17 +63,22 @@ h4:hover {
     cursor: help;
 }
 
-/* h4:active {
-    animation: spin 1s ease-in-out, changeBGColor 1s ease;
-} */
-
 @keyframes spin {
     0% {
         transform: rotate(0deg); 
         scale: 0.95;
     }
-    100% { transform: rotate(360deg); 
-        scale: 0.95;}
+    33% {
+        margin-left: 10vw;
+    }
+    66% {
+        margin-left: -10vw;
+    }
+    100% { 
+        transform: rotate(360deg); 
+        scale: 0.95;
+        margin-left: 0vw;
+    }
 }
 
 @keyframes changeBGColor {
@@ -140,4 +148,14 @@ button:hover {
     margin-left: 65vw;
     margin-top: 40vh;
     position: absolute;
+}
+
+.savebtn {
+    transition: background-color 0.3s ease;
+    background-color: #0055a5;
+    margin-top: 1vh;
+}
+
+.savebtn:hover {
+    background-color: #004280;
 }
